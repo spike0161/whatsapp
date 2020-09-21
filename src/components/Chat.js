@@ -1,6 +1,6 @@
 import React from "react";
 import { Avatar, IconButton } from "@material-ui/core";
-import { AttachFile, MoreVert, SearchOutlined } from "/@material-ui/icons";
+import { AttachFile, MoreVert, SearchOutlined } from "@material-ui/icons";
 import "../css/Chat.css";
 
 function Chat() {
