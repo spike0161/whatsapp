@@ -11,10 +11,10 @@ function App() {
 
   // grabs all the messages the first time only
   useEffect(() => {
-    axios.get("http://localhost:9000/messages/sync").then(response => {
-      setMessages(response.data)
+    axios.get("http://localhost:9000/messages/sync").then((response) => {
+      setMessages(response.data);
       console.log(response.data);
-    })
+    });
   }, []);
 
   useEffect(() => {
@@ -23,10 +23,17 @@ function App() {
     });
 
     const channel = pusher.subscribe("messages");
-    channel.bind("inserted", function (data) {
-      alert(JSON.stringify(data));
+    channel.bind("inserted", (newMessage) => {
+      alert(JSON.stringify(newMessage));
+      setMessages([...messages, newMessage]);
     });
-  }, []);
+
+// unsubscribes the listener (mulitple people sending messages)
+  return () => {
+      channel.unbind_all();
+      channel.unsubscribe();
+    };
+  }, [messages]);
   console.log(messages);
   return (
     <div className="app">
